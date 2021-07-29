@@ -1,14 +1,19 @@
 package TaxService;
 
-import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.LongAdder;
 
-public class Shop implements Callable<Long> {
+public class Shop {
     private String name;
     private long revenue = (long) (Math.random()*1_000_000);
+    private LongAdder longAdder;
 
+    public Shop(String name, LongAdder longAdder) {
+        this.name = name;
+        this.longAdder = longAdder;
+    }
 
-    @Override
-    public Long call() throws Exception {
-        return revenue;
+    public void calculate() {
+        System.out.printf("\nСегодняшняя выручка магазина %s составляет: " + revenue, name);
+        longAdder.add(revenue);
     }
 }
